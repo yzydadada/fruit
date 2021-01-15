@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yzy.dao.IWarehouseDao" >
+    <select id="getwarehousesAll" resultType="com.yzy.bean.goods_warehouse">
+select * from goods_warehouse
+        <if test="wname!=null and wname!=''">
+            where wname LIKE concat("%",#{wname},"%")
+        </if>
+</select>
+    <select id="getwarehousesone" parameterType="java.lang.Long" resultType="com.yzy.bean.goods_warehouse">
+select * from goods_warehouse where wid=#{wid}
+</select>
+    <insert id="Addwarehouses" parameterType="com.yzy.bean.goods_warehouse">
+        insert into goods_warehouse(wname,wphone,waddress,wprincipal,wareimg)
+        values (#{wname},#{wphone},#{waddress},#{wprincipal},#{wareimg})
+    </insert>
+    <select id="getwarehousesbywname" parameterType="java.lang.String" resultType="com.yzy.bean.goods_warehouse">
+        select * from goods_warehouse where wname=%%#{wname}%%
+    </select>
+    <delete id="Deletewarehouses" parameterType="java.lang.Long">
+delete from goods_warehouse where wid=#{wid}
+    </delete>
+    <update id="Updatewarehouses" parameterType="com.yzy.bean.goods_warehouse">
+        update goods_warehouse set wname=#{wname},wphone=#{wphone},waddress=#{waddress},wprincipal=#{wprincipal}
+          where wid=#{wid}
+    </update>
+</mapper>

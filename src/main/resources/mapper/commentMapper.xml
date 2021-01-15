@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yzy.dao.ICommentDao" >
+    <select id="getcommentsAll" resultType="com.yzy.bean.goodscomment">
+select * from goodscomment
+        <if test="uid!=null and uid!=''">
+            where uid LIKE concat("%",#{uid},"%")
+        </if>
+</select>
+    <select id="getcommentsbygid" parameterType="java.lang.Long" resultType="com.yzy.bean.goodscomment">
+select * from goodscomment where gid=#{gid}
+</select>
+    <insert id="Addcomments" parameterType="com.yzy.bean.goodscomment">
+        insert into goodscomment(comment,uid,userimg)
+        values (#{comment},#{uid},#{userimg})
+    </insert>
+    <select id="getcommentsbyuid" parameterType="java.lang.String" resultType="com.yzy.bean.goodscomment">
+        select * from goodscomment where uid=%%#{uid}%%
+    </select>
+    <delete id="Deletecomments" parameterType="java.lang.Long">
+delete from goodscomment where gid=#{gid}
+    </delete>
+    <update id="Updatecomments" parameterType="com.yzy.bean.goodscomment">
+        update goodscomment set comment=#{comment}
+          where gid=#{gid}
+    </update>
+</mapper>

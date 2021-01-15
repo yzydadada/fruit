@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yzy.dao.IOederDao" >
+    <insert id="Addorder" parameterType="com.yzy.bean.goods_order">
+        insert into goods_order(gid,uid,fname,fdetails,number,address,phone,allprice,pay)
+        values (#{gid},#{uid},#{fname},#{fdetails},
+                #{number},#{address},#{phone},#{allprice},#{pay})
+    </insert>
+    <select id="getorderAll" resultType="com.yzy.bean.goods_order">
+        select * from goods_order
+        <if test="fname!=null and fname!=''">
+            where fname LIKE concat("%",#{fname},"%")
+        </if>
+    </select>
+    <select id="getordermeAll" resultType="com.yzy.bean.goods_order">
+        select * from goods_order where uid=#{uid}
+<!--        <if test="fname!=null and fname!=''">-->
+<!--            where fname LIKE concat("%",#{fname},"%")-->
+<!--        </if>-->
+    </select>
+    <delete id="Deleteorder" parameterType="java.lang.Long">
+    delete from goods_order where gid=#{gid}
+        </delete>
+    <select id="getorderone" parameterType="java.lang.Long" resultType="com.yzy.bean.goods_order">
+        select * from goods_order where gid=#{gid}
+    </select>
+    <update id="Updateorder" parameterType="com.yzy.bean.goods_order">
+        update goods_order set fname=#{fname},fdetails=#{fdetails},number=#{number},address=#{address},allprice=#{allprice},phone=#{phone},pay=#{pay}
+        where gid=#{gid}
+    </update>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yzy.dao.IUserInfoDao" >
+<select id="getUserByName" parameterType="java.lang.String" resultType="com.yzy.bean.UserInfo">
+select * from user where uid=#{uid}
+</select>
+    <select id="getUseronebyName" parameterType="java.lang.String" resultType="com.yzy.bean.UserInfo">
+select * from user where uid=%%#{uid}%%
+</select>
+    <select id="getUserAll" resultType="com.yzy.bean.UserInfo">
+select * from user
+<if test="uid!=null and uid!=''">
+    where uid LIKE concat("%",#{uid},"%")
+</if>
+</select>
+    <select id="getUserone" parameterType="java.lang.Long" resultType="com.yzy.bean.UserInfo">
+select * from user where id=#{id}
+</select>
+    <insert id="AddUser" parameterType="com.yzy.bean.UserInfo">
+        insert into user(uid,upassword,gender,phone,birthday,address,authority,userimg)
+        values (#{uid},#{upassword},#{gender},#{phone},#{birthday},#{address},#{authority},#{userimg})
+    </insert>
+    <delete id="DeleteUser" parameterType="java.lang.Long">
+delete from user where id=#{id}
+    </delete>
+    <update id="UpdateUser" parameterType="com.yzy.bean.UserInfo">
+        update user set uid=#{uid},upassword=#{upassword},gender=#{gender},
+        phone=#{phone},birthday=#{birthday},address=#{address},authority=#{authority},userimg=#{userimg}
+        where id=#{id}
+    </update>
+    <update id="UpdateUserMm" parameterType="com.yzy.bean.UserInfo">
+        update user set upassword=#{upassword}
+        where id=#{id}
+    </update>
+</mapper>

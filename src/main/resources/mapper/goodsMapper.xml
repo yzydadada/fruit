@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yzy.dao.IGoodsDao" >
+    <select id="getgoodsAll" resultType="com.yzy.bean.goods">
+select * from goods
+        <if test="fname!=null and fname!=''">
+            where fname LIKE concat("%",#{fname},"%")
+        </if>
+</select>
+    <select id="getgoodsone" parameterType="java.lang.Long" resultType="com.yzy.bean.goods">
+select * from goods where fid=#{fid}
+</select>
+    <insert id="Addgoods" parameterType="com.yzy.bean.goods">
+        insert into goods(gid,fname,forigin,faddress,fdetails,price,goodsimg)
+        values (#{gid},#{fname},#{forigin},#{faddress},#{fdetails},#{price},#{goodsimg})
+    </insert>
+    <select id="getgoodsbyfname" parameterType="java.lang.String" resultType="com.yzy.bean.goods">
+        select * from goods where fname=%%#{fname}%%
+    </select>
+    <delete id="Deletegoods" parameterType="java.lang.Long">
+delete from goods where fid=#{fid}
+    </delete>
+    <update id="Updategoods" parameterType="com.yzy.bean.goods">
+        update goods set gid=#{gid},fname=#{fname},forigin=#{forigin},faddress=#{faddress},
+                         fdetails=#{fdetails},price=#{price},sales=#{sales},goodsimg=#{goodsimg}
+          where fid=#{fid}
+    </update>
+</mapper>
